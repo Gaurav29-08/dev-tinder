@@ -1,23 +1,20 @@
 const express = require("express");
+const {connectDB}  = require("./config/database");
+
 
 
 const app = express();
 
-const {adminAuth} = require('./middlewares/auth');
-
-app.use('/admin',adminAuth);
-
-app.get('/admin/getAllData',(req,res)=>{
-    res.send("data sent")
+connectDB().then(()=>{
+  console.log("Database connection established");
+  
+app.listen(3000, () => {
+  console.log("Server is successfully listening on port 3000");
 });
+  
+}).catch((err)=>{
+  console.log("Datbase can not be connected");
+  
+})
 
-app.get('/admin/deleteData',(req,res)=>{
-    res.send("delete data")
-});
 
-
-
-app.listen(3000,()=>{
-    console.log("server is successfully listeining on port 3000");
-    
-});
