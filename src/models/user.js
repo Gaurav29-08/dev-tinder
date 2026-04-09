@@ -8,17 +8,35 @@ const userSchema = mongoose.Schema({
         type : String
     },
     emailId : {
-        type : String
+        type : String,
+        required : true,
+        unique: true,
     },
     password : {
-        type : String
+        type : String,
+        required : true,
     },
     age : {
         type : Number
     },
-    gemder : {
-        type : String
-    }
+    gender : {
+        type : String,
+        validate(value){
+            if(!["male","female","others"].includes(value)){
+                throw new Error("Gender data is not valid");
+            }
+        }
+    },
+    photoUrl :  {
+        type : String,
+    },
+    about : {
+        type : String,
+        default : "Hello kese ho"
+    }, 
+skills : {
+    type : [String],
+}
 });
 
 module.exports = mongoose.model("User",userSchema);

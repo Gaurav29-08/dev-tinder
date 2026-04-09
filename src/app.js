@@ -20,6 +20,33 @@ app.post("/signup", async (req,res)=>{
  
 });
 
+
+app.delete("/delete", async(req,res)=>{
+  const userId = req.body.userId;
+  try{
+    const user = await User.findByIdAndDelete(userId);
+
+    res.send("user deleted successfully");
+  } catch(err){
+    res.status(400).send("Something went wrong")
+  }
+});
+
+
+app.patch('/update', async (req,res)=>{
+  const userId = req.body.userId;
+  const data = req.body;
+
+  try{
+    await User.findByIdAndUpdate({_id:userId},data,{
+      runValidators : true,
+    });
+    res.send("updated sucessdully")
+  } catch(err){
+    res.status(400).send("something went wrong")
+  }
+})
+
 app.get('/user',async (req,res)=>{
   const userEmail = req.body.emailId;
   try{
