@@ -14,11 +14,11 @@ const userSchema = mongoose.Schema({
         required : true,
         unique: true,
         lowercase : true,
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error("Invalid email id")
-            }
-        }
+        // validate(value){
+        //     if(!validator.isEmail(value)){
+        //         throw new Error("Invalid email id")
+        //     }
+        // }
     },
     password : {
         type : String,
@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema({
     },
     about : {
         type : String,
-        default : "Hello kese ho"
+    
     }, 
 skills : {
     type : [String],
