@@ -4,8 +4,30 @@ const app = express();
 const User =  require("./models/user");
 const {validateSignUpData} = require("./utils/validation");
 const bcrypt = require("bcrypt");
+const user = require("./models/user");
 
 app.use(express.json());
+
+
+app.post('/login', async (req,res)=>{
+  try {
+    const {emailId,password} = req.body;
+
+    const user = await User.findOne({emailId:emailId});
+    if(!user){
+      throw new Error("Email Id is not present in DB");
+    }
+    const isPAsswordValid = await bcrypt.compare(password,user.password);
+    if(isPAsswordValid){
+      res.send("Login successfully")
+    } else {
+      throw new Error("password is not correct")
+    }
+  }  catch(err){
+    res.status(400).send("Error : "+err.message);
+  }
+
+});
 
 
 app.post("/signup", async (req,res)=>{
